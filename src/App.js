@@ -2,6 +2,8 @@ import './App.css';
 import React from 'react';
 import Child from './components/ChildList.js'
 import InputModal from './components/InputModal'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 
 class App extends React.Component{
   constructor(props){
@@ -106,23 +108,41 @@ class App extends React.Component{
   render() {
     const {todoList, currentEdit, todoInput, addTask} = this.state
     return (
-      <div className="App">
-        <h1>Todo list</h1>
-        <button onClick={() => this.setState({addTask: true, type: "newTask"})}>Add task</button>
-        {addTask === true ? 
-        <InputModal 
-          inputUser={todoInput} 
-          currentEdit={currentEdit} 
-          confirmTask={this.confirmTask} 
-          declineTask={this.declineTask}
-          handleChange={this.handleChange}
-        /> : null}
-        <Child 
-          taskList={todoList} 
-          handleDelete={this.removeTask} 
-          handleEdit={this.editTask} 
-          handleAddSub={this.addSubList}
-        />
+      <div className="App container-sm">
+        <Container fluid="sm" className="title-container">
+          <Row>
+            <Col className="title text-center bg-light text-dark">
+              <h1>Todo List App</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12} className="task-container">
+              <h3>Click in the button to create new task.</h3>
+              <Button size="lg" onClick={() => this.setState({addTask: true, type: "newTask"})}>Add task</Button>
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col md={12}>
+                {addTask === true ? 
+                <InputModal
+                  showModal={addTask} 
+                  inputUser={todoInput} 
+                  currentEdit={currentEdit} 
+                  confirmTask={this.confirmTask} 
+                  declineTask={this.declineTask}
+                  handleChange={this.handleChange}
+                /> : null}
+                <Child 
+                  taskList={todoList} 
+                  handleDelete={this.removeTask} 
+                  handleEdit={this.editTask} 
+                  handleAddSub={this.addSubList}
+                />
+              </Col>
+          </Row>
+        </Container>
       </div>
     )
   };
